@@ -48,14 +48,48 @@ func TestCache(t *testing.T) {
 		require.False(t, ok)
 		require.Nil(t, val)
 	})
-
+	// Предполагаю что ожидается тест на Clear
 	t.Run("purge logic", func(t *testing.T) {
-		// Write me
+		c := NewCache(5)
+
+		c.Set("bbb", 200)
+		c.Set("a", 700)
+		c.Set("c", 255)
+		c.Set("q", 225)
+		c.Set("r", 212)
+		c.Set("f", 999)
+
+		c.Clear()
+
+		val, ok := c.Get("bbb")
+		require.False(t, ok)
+		require.Nil(t, val)
+
+		val, ok = c.Get("a")
+		require.False(t, ok)
+		require.Nil(t, val)
+
+		val, ok = c.Get("c")
+		require.False(t, ok)
+		require.Nil(t, val)
+
+		val, ok = c.Get("q")
+		require.False(t, ok)
+		require.Nil(t, val)
+
+		val, ok = c.Get("r")
+		require.False(t, ok)
+		require.Nil(t, val)
+
+		val, ok = c.Get("f")
+		require.False(t, ok)
+		require.Nil(t, val)
+
 	})
 }
 
 func TestCacheMultithreading(t *testing.T) {
-	t.Skip() // Remove me if task with asterisk completed.
+	//t.Skip() // Remove me if task with asterisk completed.
 
 	c := NewCache(10)
 	wg := &sync.WaitGroup{}
@@ -76,4 +110,13 @@ func TestCacheMultithreading(t *testing.T) {
 	}()
 
 	wg.Wait()
+}
+
+func TestCacheSingleThreadCorrectness(t *testing.T) {
+	c := NewCache(10)
+
+	for i := 0; i < 1_000_000; i++ {
+		c.Set(Key(strconv.Itoa(i)), i)
+		c.Get(Key(strconv.Itoa(rand.Intn(1_000_000))))
+	}
 }
