@@ -1,4 +1,4 @@
-module github.com/newuuser/hw01_hello_otus
+module github.com/newuuser/golang-otus-pro/hw01_hello_otus
 
 go 1.23
 
