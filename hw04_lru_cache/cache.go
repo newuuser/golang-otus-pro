@@ -35,13 +35,12 @@ func (c *lruCache) Set(key Key, value interface{}) bool {
 		v.Value = value
 		c.queue.MoveToFront(v)
 		return true
-	} else {
-		if c.queue.Len() == c.capacity {
-			c.queue.Remove(c.queue.Back())
-		}
-		c.items[key] = c.queue.PushFront(value)
-		return false
 	}
+	if c.queue.Len() == c.capacity {
+		c.queue.Remove(c.queue.Back())
+	}
+	c.items[key] = c.queue.PushFront(value)
+	return false
 }
 
 func (c *lruCache) Get(key Key) (interface{}, bool) {

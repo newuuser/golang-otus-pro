@@ -1,95 +1,1 @@
-package hw04lrucache
-
-type List interface {
-	Len() int
-	Front() *ListItem
-	Back() *ListItem
-	PushFront(v interface{}) *ListItem
-	PushBack(v interface{}) *ListItem
-	Remove(i *ListItem)
-	MoveToFront(i *ListItem)
-}
-
-type ListItem struct {
-	Value interface{}
-	Next  *ListItem
-	Prev  *ListItem
-}
-
-type list struct {
-	size int
-	end  *ListItem
-	beg  *ListItem
-}
-
-func (l *list) Len() int {
-	return l.size
-}
-
-func (l *list) Front() *ListItem {
-	return l.beg
-}
-func (l *list) Back() *ListItem {
-	return l.end
-}
-
-func (l *list) PushFront(v interface{}) *ListItem {
-	li := &ListItem{Value: v, Next: l.Front(), Prev: nil}
-	if l.Len() > 0 {
-		l.Front().Prev = li
-	} else {
-		l.end = li
-	}
-	l.beg = li
-	l.size++
-	return li
-}
-
-func (l *list) PushBack(v interface{}) *ListItem {
-	li := &ListItem{Value: v, Next: nil, Prev: l.Back()}
-	if l.Len() > 0 {
-		l.Back().Next = li
-	} else {
-		l.beg = li
-	}
-	l.end = li
-	l.size++
-	return li
-}
-
-func (l *list) Remove(i *ListItem) {
-	// messy, maybe redo
-	if i == l.Front() {
-		l.beg = l.beg.Next
-	}
-	if i == l.Back() {
-		l.end = l.end.Prev
-		if l.end != nil {
-			l.end.Next = nil
-		}
-		return
-	}
-	if i.Next != nil {
-		i.Next.Prev = i.Prev
-	}
-	if i.Prev != nil {
-		i.Prev.Next = i.Next
-	}
-	l.size--
-}
-
-func (l *list) MoveToFront(i *ListItem) {
-	if i == l.Front() {
-		return
-	}
-	l.Remove(i)
-	l.size++
-
-	i.Prev = nil
-	i.Next = l.beg
-	l.beg = i
-}
-
-func NewList() List {
-	return &list{size: 0, end: nil, beg: nil}
-}
+package hw04lrucachetype List interface {	Len() int	Front() *ListItem	Back() *ListItem	PushFront(v interface{}) *ListItem	PushBack(v interface{}) *ListItem	Remove(i *ListItem)	MoveToFront(i *ListItem)}type ListItem struct {	Value interface{}	Next  *ListItem	Prev  *ListItem}type list struct {	size int	end  *ListItem	beg  *ListItem}func (l *list) Len() int {	return l.size}func (l *list) Front() *ListItem {	return l.beg}func (l *list) Back() *ListItem {	return l.end}func (l *list) PushFront(v interface{}) *ListItem {	li := &ListItem{Value: v, Next: l.Front(), Prev: nil}	if l.Len() > 0 {		l.Front().Prev = li	} else {		l.end = li	}	l.beg = li	l.size++	return li}func (l *list) PushBack(v interface{}) *ListItem {	li := &ListItem{Value: v, Next: nil, Prev: l.Back()}	if l.Len() > 0 {		l.Back().Next = li	} else {		l.beg = li	}	l.end = li	l.size++	return li}func (l *list) Remove(i *ListItem) {	// messy, maybe redo	if i == l.Front() {		l.beg = l.beg.Next	}	if i == l.Back() {		l.end = l.end.Prev		if l.end != nil {			l.end.Next = nil		}		return	}	if i.Next != nil {		i.Next.Prev = i.Prev	}	if i.Prev != nil {		i.Prev.Next = i.Next	}	l.size--}func (l *list) MoveToFront(i *ListItem) {	if i == l.Front() {		return	}	l.Remove(i)	l.size++	i.Prev = nil	i.Next = l.beg	l.beg = i}func NewList() List {	return &list{size: 0, end: nil, beg: nil}}
