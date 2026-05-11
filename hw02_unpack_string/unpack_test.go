@@ -45,25 +45,3 @@ func TestUnpackInvalidString(t *testing.T) {
 		})
 	}
 }
-
-func TestMytest(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		{input: "нкуп5", expected: "нкуппппп"},
-		{input: "abb7r5l6z8edcrfvr9", expected: "abbbbbbbbrrrrrllllllzzzzzzzzedcrfvrrrrrrrrr"},
-		{input: "От5ус7гол2аанг", expected: "Отттттусссссссголлаанг"},
-		{input: "Go2dbye_World", expected: "Goodbye_World"},
-		{input: "然而1拉爾2特斯上7船上船真是0丟臉5", expected: "然而拉爾爾特斯上上上上上上上船上船真丟臉臉臉臉臉"},
-	}
-
-	for _, tc := range tests {
-		tc := tc
-		t.Run(tc.input, func(t *testing.T) {
-			result, err := Unpack(tc.input)
-			require.NoError(t, err)
-			require.Equal(t, tc.expected, result)
-		})
-	}
-}

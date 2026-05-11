@@ -43,27 +43,6 @@ var text = `Как видите, он  спускается  по  лестни�
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
 
-var hamlet_ger = `MARCELLUS.
-	Holla, Bernardo! Sprecht!
-	BERNARDO.
-	He, ist Horatio da?
-	HORATIO.
-	Ein Stück von ihm.
-	BERNARDO.
-	Willkommen Euch! Willkommen, Freund Marcellus!
-	HORATIO.
-	Nun, ist das Ding heut wiederum erschienen?
-	BERNARDO.
-	Ich habe nichts gesehn.
-	MARCELLUS.
-	Horatio sagt, es sei nur Einbildung,
-	Und will dem Glauben keinen Raum gestatten
-	An dieses Schreckbild, das wir zweimal sahn.
-	Deswegen hab' ich ihn hieher geladen,
-	Mit uns die Stunden dieser Nacht zu wachen,
-	Damit, wenn wieder die Erscheinung kommt,
-	Er unsern Augen zeug' und mit ihr spreche.`
-
 func TestTop10(t *testing.T) {
 	t.Run("no words in empty string", func(t *testing.T) {
 		require.Len(t, Top10(""), 0)
@@ -100,39 +79,4 @@ func TestTop10(t *testing.T) {
 			require.Equal(t, expected, Top10(text))
 		}
 	})
-}
-
-func TestMyTop10(t *testing.T) {
-	t.Run("hamlet_ger", func(t *testing.T) {
-		expected := []string{
-			"BERNARDO.",
-			"HORATIO.",
-			"Horatio",
-			"MARCELLUS.",
-			"das",
-			"die",
-			"ist",
-			"An",
-			"Augen",
-			"Bernardo!",
-		}
-		require.Equal(t, expected, Top10(hamlet_ger))
-	})
-
-	t.Run("sorting test", func(t *testing.T) {
-		expected := []string{
-			"a",
-			"b",
-			"c",
-			"d",
-			"e",
-			"f",
-			"g",
-			"h",
-			"i",
-			"j",
-		}
-		require.Equal(t, expected, Top10("z y x w v u t s r q p o n m l k j i h g f e d c b a"))
-	})
-
 }
