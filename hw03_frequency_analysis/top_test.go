@@ -43,7 +43,7 @@ var text = `Как видите, он  спускается  по  лестни�
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
 
-var hamlet_ger = `MARCELLUS.
+var hamletGer = `MARCELLUS.
 	Holla, Bernardo! Sprecht!
 	BERNARDO.
 	He, ist Horatio da?
@@ -116,7 +116,7 @@ func TestMyTop10(t *testing.T) {
 			"Augen",
 			"Bernardo!",
 		}
-		require.Equal(t, expected, Top10(hamlet_ger))
+		require.Equal(t, expected, Top10(hamletGer))
 	})
 
 	t.Run("sorting test", func(t *testing.T) {
