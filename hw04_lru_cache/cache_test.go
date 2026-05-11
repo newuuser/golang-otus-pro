@@ -48,7 +48,9 @@ func TestCache(t *testing.T) {
 		require.False(t, ok)
 		require.Nil(t, val)
 	})
-	// Предполагаю что ожидается тест на Clear
+}
+
+func TestCachePurgeLogic(t *testing.T) {
 	t.Run("purge logic", func(t *testing.T) {
 		c := NewCache(5)
 
