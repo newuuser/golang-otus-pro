@@ -50,7 +50,6 @@ func Run(tasks []Task, n, m int) error {
 	wg.Wait()
 	if ctr < m {
 		return nil
-	} else {
-		return ErrErrorsLimitExceeded
 	}
+	return ErrErrorsLimitExceeded
 }

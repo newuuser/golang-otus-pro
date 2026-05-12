@@ -100,7 +100,7 @@ func TestMyRun(t *testing.T) {
 			if i%period == 0 {
 				tasks = append(tasks, func() error {
 					atomic.AddInt32(&runTasksCount, 1)
-					return fmt.Errorf("!")
+					return fmt.Errorf("error from task %d", i)
 				})
 			} else {
 				tasks = append(tasks, func() error {
