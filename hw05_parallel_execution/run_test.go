@@ -69,7 +69,7 @@ func TestRun(t *testing.T) {
 	})
 }
 
-func TestMyRun(t *testing.T) {
+func TestMyRun1(t *testing.T) {
 	defer goleak.VerifyNone(t)
 
 	t.Run("ignore errors", func(t *testing.T) {
@@ -117,7 +117,8 @@ func TestMyRun(t *testing.T) {
 		maxCompletedAllowed := int32(period*maxErrorsCount + 1 + workersCount)
 		require.LessOrEqual(t, runTasksCount, maxCompletedAllowed, "extra tasks were started")
 	})
-
+}
+func TestMyRun2(t *testing.T) {
 	t.Run("High tasks : valid end", func(t *testing.T) {
 		tasksCount := 100000
 		tasks := make([]Task, 0, tasksCount)
