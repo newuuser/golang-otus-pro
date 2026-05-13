@@ -1,4 +1,4 @@
-module github.com/newuuser/hw03_frequency_analysis
+module github.com/newuuser/golang-otus-pro/hw03_frequency_analysis
 
 go 1.23
 
