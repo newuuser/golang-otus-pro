@@ -1,4 +1,4 @@
-module github.com/newuuser/02_unpack_string
+module github.com/newuuser/golang-otus-pro/02_unpack_string
 
 go 1.23
 
