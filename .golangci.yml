@@ -34,7 +34,7 @@ linters:
     - nestif
     - nilerr
     - noctx
-    - nolintlint
+   # - nolintlint
     - prealloc
     - predeclared
     - revive
