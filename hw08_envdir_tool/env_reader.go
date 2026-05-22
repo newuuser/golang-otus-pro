@@ -2,8 +2,10 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type Environment map[string]EnvValue
@@ -25,20 +27,46 @@ func ReadDir(dir string) (Environment, error) {
 	env := make(Environment)
 	for _, file := range files {
 		name := file.Name()
+		ok := true
+		// Skip if name contains '='
+		for _, c := range name {
+			if c == '=' {
+				ok = false
+				break
+			}
+		}
+
+		if !ok {
+			continue
+		}
+
 		path := filepath.Join(dir, name)
 		f, err := os.Open(path)
 		if err != nil {
 			return nil, err
 		}
+		// Check if empty
+		stat, err := f.Stat()
+
+		if err != nil {
+			return nil, err
+		}
+
+		if stat.Size() == 0 {
+			env[name] = EnvValue{"", true}
+			continue
+		}
+
 		br := bufio.NewScanner(f)
 		line := ""
-		ok := br.Scan()
+		ok = br.Scan()
 		if ok {
 			line = br.Text()
 		}
 
-		env[name] = EnvValue{line, ok}
-		//os.ReadFile(path)
+		line = strings.TrimRight(line, "\t ")
+		line = string(bytes.Replace([]byte(line), []byte("\000"), []byte("\n"), -1))
+		env[name] = EnvValue{line, false}
 	}
 	return env, nil
 }
