@@ -41,13 +41,12 @@ func ReadDir(dir string) (Environment, error) {
 		}
 
 		path := filepath.Join(dir, name)
-		f, err := os.Open(path)
+		f, err := os.Open(path) //nolint
 		if err != nil {
 			return nil, err
 		}
 		// Check if empty
 		stat, err := f.Stat()
-
 		if err != nil {
 			return nil, err
 		}
@@ -65,7 +64,7 @@ func ReadDir(dir string) (Environment, error) {
 		}
 
 		line = strings.TrimRight(line, "\t ")
-		line = string(bytes.Replace([]byte(line), []byte("\000"), []byte("\n"), -1))
+		line = string(bytes.ReplaceAll([]byte(line), []byte("\000"), []byte("\n")))
 		env[name] = EnvValue{line, false}
 	}
 	return env, nil

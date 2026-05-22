@@ -11,7 +11,7 @@ import (
 
 // RunCmd runs a command + arguments (cmd) with environment variables from env.
 func RunCmd(cmd []string, env Environment) (returnCode int) {
-	exe := exec.Command(cmd[0], cmd[1:]...)
+	exe := exec.Command(cmd[0], cmd[1:]...) //nolint
 
 	osEnv := os.Environ()
 	runEnv := make([]string, 0)
