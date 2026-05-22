@@ -8,7 +8,7 @@ import (
 
 func TestRunCmd(t *testing.T) {
 	t.Run("Valid", func(t *testing.T) {
-		ini := []string{"go", "run", "./testdata/good_program/main.go"}
+		ini := []string{"go", "run", "./testdata/good_program/main.go"} //nolint
 		code := RunCmd(ini, make(Environment))
 		require.Zero(t, code)
 	})
