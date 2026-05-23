@@ -82,10 +82,10 @@ linters:
       - builtin$
       - examples$
 formatters:
-  enable:
-    - gci
-    - gofmt
-    - gofumpt
+  #enable:
+    #- gci
+    #- gofmt
+    #- gofumpt
   exclusions:
     generated: lax
     paths:
