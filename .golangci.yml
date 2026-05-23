@@ -81,14 +81,14 @@ linters:
       - third_party$
       - builtin$
       - examples$
-formatters:
+#formatters:
   #enable:
     #- gci
     #- gofmt
     #- gofumpt
-  exclusions:
-    generated: lax
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
+#  exclusions:
+#    generated: lax
+#    paths:
+#      - third_party$
+#      - builtin$
+#      - examples$
