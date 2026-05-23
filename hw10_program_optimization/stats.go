@@ -30,5 +30,6 @@ func GetDomainStat(r io.Reader, domain string) (result DomainStat, err error) {
 			result[strings.ToLower(strings.SplitN(email, "@", 2)[1])]++
 		}
 	}
+	err = scanner.Err()
 	return
 }
