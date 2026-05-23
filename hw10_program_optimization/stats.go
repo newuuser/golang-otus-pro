@@ -13,7 +13,6 @@ type DomainStat map[string]int
 
 func GetDomainStat(r io.Reader, domain string) (result DomainStat, err error) {
 	result = make(DomainStat)
-	r = bufio.NewReader(r)
 	scanner := bufio.NewScanner(r)
 	reg, err := regexp.Compile("\\." + domain)
 	if err != nil {
