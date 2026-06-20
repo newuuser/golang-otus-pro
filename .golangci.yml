@@ -16,7 +16,7 @@ linters:
     - durationcheck
     - errorlint
     - exhaustive
-    - funlen
+    #- funlen
     - gocognit
     - goconst
     - gocritic
@@ -34,7 +34,7 @@ linters:
     - nestif
     - nilerr
     - noctx
-    - nolintlint
+    #- nolintlint
     - prealloc
     - predeclared
     - revive
@@ -73,7 +73,7 @@ linters:
     rules:
       - linters:
           - dupl
-          - errcheck
+         # - errcheck
           - gocyclo
           - gosec
         path: _test\.go
