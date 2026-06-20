@@ -91,7 +91,7 @@ func TestCopy(t *testing.T) {
 	t.Run("copy file to self", func(t *testing.T) {
 		f, _ := os.Create(".testdata/test.txt") //nolint:errcheck
 		defer os.Remove("testdata/test.txt")
-		f.WriteString("test")
+		_, _ = f.WriteString("test")
 		f.Close()
 
 		err := Copy("test.txt", "test.txt", 0, 0)
