@@ -16,15 +16,15 @@ func drain(in In) {
 type Stage func(in In) (out Out)
 
 func ExecutePipeline(in In, done In, stages ...Stage) Out {
-	ch := make(Bi)
-	var res In = ch
+	inChannel := make(Bi)
+	var res In = inChannel
 
 	for _, stage := range stages {
 		res = stage(res)
 	}
 
 	go func() {
-		defer close(ch)
+		defer close(inChannel)
 		for {
 			select {
 			case <-done:
@@ -33,14 +33,14 @@ func ExecutePipeline(in In, done In, stages ...Stage) Out {
 				if !ok {
 					return
 				}
-				ch <- v
+				inChannel <- v
 			}
 		}
 	}()
-	ret := make(Bi)
+	outChannel := make(Bi)
 
 	go func() {
-		defer close(ret)
+		defer close(outChannel)
 		for {
 			select {
 			case <-done:
@@ -50,10 +50,10 @@ func ExecutePipeline(in In, done In, stages ...Stage) Out {
 				if !ok {
 					return
 				}
-				ret <- v
+				outChannel <- v
 			}
 		}
 	}()
 
-	return ret
+	return outChannel
 }
