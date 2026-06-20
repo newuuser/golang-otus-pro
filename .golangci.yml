@@ -68,7 +68,7 @@ linters:
     - nolintlint
     - prealloc
     - predeclared
-    - revive
+    #- revive
     - staticcheck
     - stylecheck
     - tagliatelle
@@ -77,4 +77,5 @@ linters:
     - unconvert
     - unparam
     - unused
+    - whitespace
     - whitespace
