@@ -18,6 +18,7 @@ func RunCmd(cmd []string, env Environment) (returnCode int) {
 
 	exe.Stdout = os.Stdout
 	exe.Stderr = os.Stderr
+	exe.Stdin = os.Stdin
 
 	unset := make(map[string]struct{})
 
@@ -43,7 +44,8 @@ func RunCmd(cmd []string, env Environment) (returnCode int) {
 	exe.Env = runEnv
 	err := exe.Start()
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
+		return 3
 	}
 	err = exe.Wait()
 
@@ -56,6 +58,7 @@ func RunCmd(cmd []string, env Environment) (returnCode int) {
 	if ok {
 		return e.ExitCode()
 	}
-	log.Fatal(err)
-	return -1
+	// iff unexpected not ExitError exception like I/O exception
+	log.Print(err)
+	return 4
 }
