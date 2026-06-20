@@ -7,14 +7,10 @@ type (
 )
 
 func drain(in In) {
+	//i:=0
 	go func() {
-		for {
-			select {
-			case _, ok := <-in:
-				if !ok {
-					return
-				}
-			}
+		for _ = range in {
+
 		}
 	}()
 }
