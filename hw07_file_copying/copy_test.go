@@ -24,7 +24,7 @@ func TestCopy(t *testing.T) {
 	})
 
 	t.Run("offset=0, limit=10", func(t *testing.T) {
-		os.Create(".testdata/cpy.txt")
+		os.Create(".testdata/cpy.txt") //nolint:errcheck
 		defer os.Remove("testdata/cpy.txt")
 		err := Copy("./testdata/input.txt", "./testdata/cpy.txt", 0, 10)
 		require.Nil(t, err)
@@ -37,7 +37,7 @@ func TestCopy(t *testing.T) {
 	})
 
 	t.Run("offset=0, limit=0", func(t *testing.T) {
-		os.Create(".testdata/cpy.txt")
+		os.Create(".testdata/cpy.txt") //nolint:errcheck
 		defer os.Remove("testdata/cpy.txt")
 		err := Copy("./testdata/input.txt", "./testdata/cpy.txt", 0, 0)
 		require.Nil(t, err)
@@ -50,7 +50,7 @@ func TestCopy(t *testing.T) {
 	})
 
 	t.Run("offset=0, limit=1000", func(t *testing.T) {
-		os.Create(".testdata/cpy.txt")
+		os.Create(".testdata/cpy.txt") //nolint:errcheck
 		defer os.Remove("testdata/cpy.txt")
 		err := Copy("./testdata/input.txt", "./testdata/cpy.txt", 0, 1000)
 		require.Nil(t, err)
@@ -63,7 +63,7 @@ func TestCopy(t *testing.T) {
 	})
 
 	t.Run("offset=100, limit=1000", func(t *testing.T) {
-		os.Create(".testdata/cpy.txt")
+		os.Create(".testdata/cpy.txt") //nolint:errcheck
 		defer os.Remove("testdata/cpy.txt")
 		err := Copy("./testdata/input.txt", "./testdata/cpy.txt", 100, 1000)
 		require.Nil(t, err)
@@ -76,7 +76,7 @@ func TestCopy(t *testing.T) {
 	})
 
 	t.Run("offset=6000, limit=1000", func(t *testing.T) {
-		os.Create(".testdata/cpy.txt")
+		os.Create(".testdata/cpy.txt") //nolint:errcheck
 		defer os.Remove("testdata/cpy.txt")
 		err := Copy("./testdata/input.txt", "./testdata/cpy.txt", 6000, 1000)
 		require.Nil(t, err)
@@ -89,7 +89,7 @@ func TestCopy(t *testing.T) {
 	})
 
 	t.Run("copy file to self", func(t *testing.T) {
-		f, _ := os.Create(".testdata/test.txt")
+		f, _ := os.Create(".testdata/test.txt") //nolint:errcheck
 		defer os.Remove("testdata/test.txt")
 		f.WriteString("test")
 		f.Close()
