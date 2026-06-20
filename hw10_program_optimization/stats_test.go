@@ -1,3 +1,4 @@
+//go:build !bench
 // +build !bench
 
 package hw10programoptimization
@@ -15,6 +16,10 @@ func TestGetDomainStat(t *testing.T) {
 {"Id":3,"Name":"Clarence Olson","Username":"RachelAdams","Email":"RoseSmith@Browsecat.com","Phone":"988-48-97","Password":"71kuz3gA5w","Address":"Monterey Park 39"}
 {"Id":4,"Name":"Gregory Reid","Username":"tButler","Email":"5Moore@Teklist.net","Phone":"520-04-16","Password":"r639qLNu","Address":"Sunfield Park 20"}
 {"Id":5,"Name":"Janice Rose","Username":"KeithHart","Email":"nulla@Linktype.com","Phone":"146-91-01","Password":"acSBF5","Address":"Russell Trail 61"}`
+
+	dataInv1 := `{"Ide":"Vim","Language":"go","Hello":"world"}`
+	dataInv2 := `{"Id":1,"Name":"Howard Mendoza","Username":"0Oliver","Phone":"6-866-899-36-79","Password":"InAQJvsq","Address":"Blackbird Place 25"}`
+	dataInv3 := `Gibberish`
 
 	t.Run("find 'com'", func(t *testing.T) {
 		result, err := GetDomainStat(bytes.NewBufferString(data), "com")
@@ -35,5 +40,18 @@ func TestGetDomainStat(t *testing.T) {
 		result, err := GetDomainStat(bytes.NewBufferString(data), "unknown")
 		require.NoError(t, err)
 		require.Equal(t, DomainStat{}, result)
+	})
+
+	t.Run("invalid 1", func(t *testing.T) {
+		_, err := GetDomainStat(bytes.NewBufferString(dataInv1), "lv")
+		require.NotNil(t, err)
+	})
+	t.Run("invalid 2", func(t *testing.T) {
+		_, err := GetDomainStat(bytes.NewBufferString(dataInv2), "lv")
+		require.NotNil(t, err)
+	})
+	t.Run("invalid 3", func(t *testing.T) {
+		_, err := GetDomainStat(bytes.NewBufferString(dataInv3), "lv")
+		require.NotNil(t, err)
 	})
 }

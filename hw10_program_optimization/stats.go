@@ -2,6 +2,7 @@ package hw10programoptimization
 
 import (
 	"bufio"
+	"errors"
 	"io"
 	"regexp"
 	"strings"
@@ -21,11 +22,16 @@ func GetDomainStat(r io.Reader, domain string) (result DomainStat, err error) {
 
 	var p fastjson.Parser
 	for scanner.Scan() {
-		v, err := p.ParseBytes(scanner.Bytes())
+		var v *fastjson.Value
+		v, err = p.ParseBytes(scanner.Bytes())
 		if err != nil {
-			return nil, err
+			return
 		}
 		email := string(v.GetStringBytes("Email"))
+		if email == "" {
+			err = errors.New("invalid email")
+			return
+		}
 		if reg.Match([]byte(email)) {
 			result[strings.ToLower(strings.SplitN(email, "@", 2)[1])]++
 		}
