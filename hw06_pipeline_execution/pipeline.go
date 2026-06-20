@@ -7,11 +7,9 @@ type (
 )
 
 func drain(in In) {
-	//i:=0
 	go func() {
 		for _ = range in {
-
-		}
+		} //nolint:revive
 	}()
 }
 
