@@ -18,31 +18,31 @@ func Run(tasks []Task, n, m int) error {
 	}
 
 	var mu sync.RWMutex
-	stack := make(chan struct{}, n)
-	var wg sync.WaitGroup
 	ctr := 0
+	stack := make(chan Task, len(tasks))
+	for _, task := range tasks {
+		stack <- task
+	}
+	close(stack)
+	var wg sync.WaitGroup
+	wg.Add(n)
 
-	for i := 0; i < len(tasks); i++ {
-		mu.RLock()
-		if ctr >= m {
-			mu.RUnlock()
-			break
-		}
-		mu.RUnlock()
-
-		j := i
-		stack <- struct{}{}
-		wg.Add(1)
+	for i := 0; i < n; i++ {
 		go func() {
-			defer func() {
-				<-stack
-				wg.Done()
-			}()
-			err := tasks[j]()
-			if err != nil {
-				mu.Lock()
-				ctr++
-				mu.Unlock()
+			defer wg.Done()
+			for task := range stack {
+				err := task()
+				if err != nil {
+					mu.Lock()
+					ctr++
+					mu.Unlock()
+				}
+				mu.RLock()
+				if ctr >= m {
+					mu.RUnlock()
+					break
+				}
+				mu.RUnlock()
 			}
 		}()
 	}
